@@ -1,0 +1,26 @@
+name: Build and deploy
+run-name: Deploying ${{ github.sha }} to gh-pages
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: ${{ !contains(github.event.head_commit.message, '[no-release]') || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: yarn install --production --frozen-lockfile
+
+      - name: Deploy to gh-pages
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          yarn deploy -- -u "github-actions-bot <support+actions@github.com>" -m "doc: deployed ${GITHUB_SHA} to gh-pages" --nojekyll
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
