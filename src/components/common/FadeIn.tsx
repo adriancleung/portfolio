@@ -36,7 +36,7 @@ const FadeInWrapper = ({ children }: FadeInWrapperProps) => {
         observer.unobserve(ref.current);
       }
     };
-  }, []);
+  }, [ref]);
 
   return (
     <FadeInContainer ref={ref} className={isVisible ? "is-visible" : ""}>

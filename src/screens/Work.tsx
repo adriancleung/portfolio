@@ -66,8 +66,10 @@ const WorkInfo = ({
         }`}</span>
       </WorkTitleContainer>
       <WorkAchievementList>
-        {achievements.map((achievement) => (
-          <WorkAchievementItem>{achievement}</WorkAchievementItem>
+        {achievements.map((achievement, index) => (
+          <WorkAchievementItem key={`achievement-${index}`}>
+            {achievement}
+          </WorkAchievementItem>
         ))}
       </WorkAchievementList>
     </WorkInfoContainer>
