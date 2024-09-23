@@ -1,13 +1,14 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import FadeInWrapper from "../components/common/FadeIn";
-import Headshot from "../assets/headshot.jpg";
-import { media } from "../styles/breakpoints";
-import { FullScreenLayout } from "../styles/layouts";
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import FadeInWrapper from '../components/common/FadeIn';
+import Headshot from '../assets/headshot.jpg';
+import { media } from '../styles/breakpoints';
+import { FullScreenLayout } from '../styles/layouts';
+import firebase from '../services/firebase';
 
 const animate = keyframes`
   0%, 100% {
@@ -46,7 +47,7 @@ const SocialContainer = styled.div`
 const ProfilePicture = styled.div`
   height: 500px;
   width: 500px;
-  background-image: url("${Headshot}");
+  background-image: url('${Headshot}');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -75,7 +76,19 @@ const SocialLink = styled.a`
   color: black;
 `;
 
+interface AboutInfo {
+  name: string;
+  title: string;
+  background: string;
+  socialLinks: {
+    type: 'LinkedIn' | 'GitHub' | 'Instagram' | 'Mail';
+    url: string;
+  }[];
+  email: string;
+}
+
 const Hero = () => {
+  const info: AboutInfo = firebase.config.get('about');
   return (
     <FadeInWrapper>
       <HeroContainer>
@@ -83,60 +96,37 @@ const Hero = () => {
           <ProfilePicture />
           <IntroContainer>
             <TitleContainer>
-              <h1>Adrian Leung</h1>
+              <h1>{info.name}</h1>
               <p> | </p>
-              <code>Software Engineer @ Intuit</code>
+              <code>{info.title}</code>
             </TitleContainer>
-            <div style={{ textAlign: "justify" }}>
-              <p>Thanks for dropping by!</p>
-              <p>
-                My name is <strong>Adrian</strong> and I’m a{" "}
-                <strong>full-stack software engineer</strong> with an emphasis
-                in backend development. I hold a{" "}
-                <strong>BSc. - Computing Science</strong> from the University of
-                Alberta. I have <strong>2+ years of experience</strong> working
-                in consulting and financial technologies. My previous works
-                include authentication, monolithic development and migration,
-                GTM initatives, as well as AI/ML development.
-              </p>
-              <p>
-                I’m passionate about finding innovative ways to problem-solving
-                and using my skills to help others achieve their full potential.
-              </p>
-              <p>
-                In my free time, I’m passionate about hiking, camping, playing
-                volleyball, bouldering, skiing, and snowboarding, golfing, and
-                cycling. I also enjoy hanging out with friends and exploring the
-                great outdoors. Feel free to connect with me on my various
-                platforms and I look forward to hearing from you!
-              </p>
-            </div>
+            <div
+              style={{ textAlign: 'justify' }}
+              dangerouslySetInnerHTML={{ __html: info.background }}
+            />
           </IntroContainer>
         </ProfileContainer>
         <SocialContainer>
           <SocialLink
-            target="_blank"
-            rel="noreferrer"
-            href="https://linkedin.com/in/adriancleung"
-          >
-            <LinkedInIcon fontSize="large" />
+            target='_blank'
+            rel='noreferrer'
+            href='https://linkedin.com/in/adriancleung'>
+            <LinkedInIcon fontSize='large' />
           </SocialLink>
           <SocialLink
-            target="_blank"
-            rel="noreferrer"
-            href="https://github.com/adriancleung"
-          >
-            <GitHubIcon fontSize="large" />
+            target='_blank'
+            rel='noreferrer'
+            href='https://github.com/adriancleung'>
+            <GitHubIcon fontSize='large' />
           </SocialLink>
           <SocialLink
-            target="_blank"
-            rel="noreferrer"
-            href="https://instagram.com/adriancleung"
-          >
-            <InstagramIcon fontSize="large" />
+            target='_blank'
+            rel='noreferrer'
+            href='https://instagram.com/adriancleung'>
+            <InstagramIcon fontSize='large' />
           </SocialLink>
-          <SocialLink href="mailto:leung.c.adrian@gmail.com?subject=Inquiry%20-%20Adrian%20L">
-            <EmailOutlinedIcon fontSize="large" />
+          <SocialLink href='mailto:leung.c.adrian@gmail.com?subject=Inquiry%20-%20Adrian%20L'>
+            <EmailOutlinedIcon fontSize='large' />
           </SocialLink>
         </SocialContainer>
       </HeroContainer>
