@@ -4,7 +4,7 @@ import styled from "styled-components";
 const FadeInContainer = styled.div`
   opacity: 0;
   visibility: hidden;
-  transition: opacity 1s ease-in, visibility 1s ease-in;
+  transition: opacity 0.7s ease-in, visibility 0.7s ease-in;
   will-change: opacity, visibility;
 
   &.is-visible {
@@ -26,13 +26,14 @@ const FadeInWrapper = ({ children }: FadeInWrapperProps) => {
       (entries) => {
         entries.forEach((entry) => setVisibility(entry.isIntersecting));
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
     if (ref.current) {
       observer.observe(ref.current);
     }
     return () => {
       if (ref.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         observer.unobserve(ref.current);
       }
     };

@@ -9,6 +9,10 @@ const WorkContainer = styled(FullScreenLayout)`
   flex-direction: column;
   justify-content: center;
   gap: 20px;
+
+  ${media.md`
+    font-size: 0.7rem;
+  `}
 `;
 
 const WorkInfoContainer = styled.div``;

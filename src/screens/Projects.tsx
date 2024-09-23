@@ -13,6 +13,10 @@ const ProjectsContainer = styled(FullScreenLayout)`
   flex-direction: column;
   justify-content: center;
   gap: 20px;
+  
+  ${media.md`
+    font-size: 0.7rem;
+  `}
 `;
 
 const HeaderContainer = styled.div`
@@ -24,7 +28,7 @@ const HeaderContainer = styled.div`
   justify-content: center;
   gap: 20px;
 
-  ${media.md`
+  ${media.lg`
     width: unset;
   `}
 `;
@@ -43,7 +47,7 @@ const ProjectCarouselContainer = styled.div`
 `;
 
 const ProjectCard = styled.div`
-  width: 400px;
+  width: 380px;
   height: 500px;
   display: flex;
   flex-direction: column;
@@ -56,6 +60,11 @@ const ProjectCard = styled.div`
   border: 1px black solid;
   border-radius: 24px;
   box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.1);
+
+  ${media.md`
+    width: 300px;
+    height: 400px;
+  `}
 `;
 
 const Projects = () => {

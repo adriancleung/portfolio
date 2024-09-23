@@ -33,6 +33,7 @@ const ProfileContainer = styled.div`
 
   ${media.md`
     flex-direction: column;
+    font-size: 0.7rem;
   `}
 `;
 
