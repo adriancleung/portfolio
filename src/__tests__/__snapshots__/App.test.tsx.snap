@@ -3,7 +3,7 @@
 exports[`renders App 1`] = `
 <DocumentFragment>
   <div
-    class="sc-jtQUzJ fbBflO"
+    class="sc-eOzmre iYeiCe"
   >
     <div
       class="sc-blHHSb jXusDg"
@@ -305,8 +305,22 @@ exports[`renders App 1`] = `
       class="sc-blHHSb jXusDg"
     >
       <div
-        class="sc-gtLWhw sc-cHqXqK cfhcRf"
-      />
+        class="sc-gtLWhw sc-cHqXqK cfhcRf gqkZle"
+      >
+        <div
+          class="sc-jtQUzJ joBnLE"
+        >
+          <h2>
+            Projects
+          </h2>
+          <p>
+            Check out some of the publicly available projects I've worked on previously!
+          </p>
+        </div>
+        <div
+          class="sc-cEzcPc jLStQj"
+        />
+      </div>
     </div>
   </div>
 </DocumentFragment>
