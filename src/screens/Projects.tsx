@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import { FullScreenLayout } from "../styles/layouts";
-import FadeInWrapper from "../components/common/FadeIn";
-import github, { GetRepoResponse } from "../services/github";
-import { media } from "../styles/breakpoints";
+import React, { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { FullScreenLayout } from '../styles/layouts';
+import FadeInWrapper from '../components/common/FadeIn';
+import github, { GetRepoResponse } from '../services/github';
+import { media } from '../styles/breakpoints';
+import firebase from '../services/firebase';
 
 const ProjectsContainer = styled(FullScreenLayout)`
   max-width: 100vw;
@@ -13,7 +14,7 @@ const ProjectsContainer = styled(FullScreenLayout)`
   flex-direction: column;
   justify-content: center;
   gap: 20px;
-  
+
   ${media.md`
     font-size: 0.7rem;
   `}
@@ -70,7 +71,18 @@ const ProjectCard = styled.div`
 const Projects = () => {
   const [repos, setRepos] = useState<GetRepoResponse[]>();
   useEffect(() => {
-    github.repos.get().then((res) => setRepos(res));
+    github.repos
+      .get()
+      .then(res => {
+        firebase.analytics.logEvent('repos_fetch_success');
+        setRepos(res);
+      })
+      .catch(err => firebase.analytics.logEvent('repos_fetch_failed', err));
+    firebase.analytics.logEvent('projects_viewed');
+  }, []);
+
+  const handleProjectLinkClicked = useCallback((repo_name: string) => {
+    firebase.analytics.logEvent(`project_link_clicked`, { repo_name });
   }, []);
 
   return (
@@ -85,7 +97,7 @@ const Projects = () => {
         </HeaderContainer>
 
         <ProjectCarouselContainer>
-          {repos?.map((repo) => (
+          {repos?.map(repo => (
             <ProjectCard key={repo.full_name}>
               <div>
                 <h3>{repo.name}</h3>
@@ -93,17 +105,16 @@ const Projects = () => {
               </div>
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
                 <a
-                  target="_blank"
-                  rel="noreferrer"
+                  target='_blank'
+                  rel='noreferrer'
+                  onClick={() => handleProjectLinkClicked(repo.full_name)}
                   href={repo.html_url}
-                  style={{ textDecoration: "none", color: "black" }}
-                >
+                  style={{ textDecoration: 'none', color: 'black' }}>
                   <GitHubIcon />
                 </a>
 

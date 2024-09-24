@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import FadeInWrapper from '../components/common/FadeIn';
 import { media } from '../styles/breakpoints';
@@ -85,16 +85,13 @@ const WorkInfo = ({
   );
 };
 
-interface WorkExperience {
-  title: string;
-  company: string;
-  achievements: string[];
-  startDate: string;
-  endDate?: string;
-}
-
 const Work = () => {
-  const workExperiences: WorkExperience[] = firebase.config.get('work');
+  const workExperiences: WorkInfoProps[] = firebase.config.get('work');
+
+  useEffect(() => {
+    firebase.analytics.logEvent('work_viewed');
+  });
+
   return (
     <FadeInWrapper>
       <WorkContainer>
@@ -102,11 +99,7 @@ const Work = () => {
         {workExperiences.map(workExperience => (
           <WorkInfo
             key={`${workExperience.title}-${workExperience.company}`}
-            title={workExperience.title}
-            company={workExperience.company}
-            achievements={workExperience.achievements}
-            startDate={workExperience.startDate}
-            endDate={workExperience.endDate}
+            {...workExperience}
           />
         ))}
       </WorkContainer>

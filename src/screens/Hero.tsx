@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -89,6 +89,17 @@ interface AboutInfo {
 
 const Hero = () => {
   const info: AboutInfo = firebase.config.get('about');
+
+  useEffect(() => {
+    firebase.analytics.logEvent('hero_viewed');
+  }, []);
+
+  const handleLinkClicked = useCallback((link: string) => {
+    firebase.analytics.logEvent('social_link_clicked', {
+      type: link.toLowerCase(),
+    });
+  }, []);
+
   return (
     <FadeInWrapper>
       <HeroContainer>
@@ -110,22 +121,27 @@ const Hero = () => {
           <SocialLink
             target='_blank'
             rel='noreferrer'
+            onClick={() => handleLinkClicked('LinkedIn')}
             href='https://linkedin.com/in/adriancleung'>
             <LinkedInIcon fontSize='large' />
           </SocialLink>
           <SocialLink
             target='_blank'
             rel='noreferrer'
+            onClick={() => handleLinkClicked('GitHub')}
             href='https://github.com/adriancleung'>
             <GitHubIcon fontSize='large' />
           </SocialLink>
           <SocialLink
             target='_blank'
             rel='noreferrer'
+            onClick={() => handleLinkClicked('Instagram')}
             href='https://instagram.com/adriancleung'>
             <InstagramIcon fontSize='large' />
           </SocialLink>
-          <SocialLink href='mailto:leung.c.adrian@gmail.com?subject=Inquiry%20-%20Adrian%20L'>
+          <SocialLink
+            onClick={() => handleLinkClicked('Email')}
+            href='mailto:leung.c.adrian@gmail.com?subject=Inquiry%20-%20Adrian%20L'>
             <EmailOutlinedIcon fontSize='large' />
           </SocialLink>
         </SocialContainer>

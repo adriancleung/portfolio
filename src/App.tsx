@@ -13,7 +13,14 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    firebase.config.fetchAndActivate().then(() => setIsLoading(false));
+    firebase.config
+      .fetchAndActivate()
+      .then(() => {
+        firebase.analytics.logEvent('config_load_success');
+        setIsLoading(false);
+      })
+      .catch(err => firebase.analytics.logEvent('config_load_failure', err));
+    firebase.analytics.logEvent('app_viewed');
   }, []);
 
   return isLoading ? (

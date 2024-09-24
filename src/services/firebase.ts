@@ -30,7 +30,8 @@ const firebase = {
     fetchAndActivate: () => fetchAndActivate(remoteConfig),
   },
   analytics: {
-    logEvent: (eventName: string) => logEvent(analytics, eventName),
+    logEvent: (eventName: string, eventProperties?: object) =>
+      logEvent(analytics, eventName, { ...eventProperties }),
   },
 };
 
