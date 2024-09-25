@@ -1,5 +1,5 @@
-import { createRef, useEffect, useState } from "react";
-import styled from "styled-components";
+import { createRef, ReactNode, useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 const FadeInContainer = styled.div`
   opacity: 0;
@@ -14,7 +14,7 @@ const FadeInContainer = styled.div`
 `;
 
 interface FadeInWrapperProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const FadeInWrapper = ({ children }: FadeInWrapperProps) => {
@@ -23,8 +23,8 @@ const FadeInWrapper = ({ children }: FadeInWrapperProps) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => setVisibility(entry.isIntersecting));
+      entries => {
+        entries.forEach(entry => setVisibility(entry.isIntersecting));
       },
       { threshold: 0.1 }
     );
@@ -40,7 +40,7 @@ const FadeInWrapper = ({ children }: FadeInWrapperProps) => {
   }, [ref]);
 
   return (
-    <FadeInContainer ref={ref} className={isVisible ? "is-visible" : ""}>
+    <FadeInContainer ref={ref} className={isVisible ? 'is-visible' : ''}>
       {children}
     </FadeInContainer>
   );

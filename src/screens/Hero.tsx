@@ -94,7 +94,7 @@ const Hero = () => {
     firebase.analytics.logEvent('hero_viewed');
   }, []);
 
-  const handleLinkClicked = useCallback((link: string) => {
+  const handleLinkClick = useCallback((link: string) => {
     firebase.analytics.logEvent('social_link_clicked', {
       type: link.toLowerCase(),
     });
@@ -121,26 +121,26 @@ const Hero = () => {
           <SocialLink
             target='_blank'
             rel='noreferrer'
-            onClick={() => handleLinkClicked('LinkedIn')}
+            onClick={() => handleLinkClick('LinkedIn')}
             href='https://linkedin.com/in/adriancleung'>
             <LinkedInIcon fontSize='large' />
           </SocialLink>
           <SocialLink
             target='_blank'
             rel='noreferrer'
-            onClick={() => handleLinkClicked('GitHub')}
+            onClick={() => handleLinkClick('GitHub')}
             href='https://github.com/adriancleung'>
             <GitHubIcon fontSize='large' />
           </SocialLink>
           <SocialLink
             target='_blank'
             rel='noreferrer'
-            onClick={() => handleLinkClicked('Instagram')}
+            onClick={() => handleLinkClick('Instagram')}
             href='https://instagram.com/adriancleung'>
             <InstagramIcon fontSize='large' />
           </SocialLink>
           <SocialLink
-            onClick={() => handleLinkClicked('Email')}
+            onClick={() => handleLinkClick('Email')}
             href='mailto:leung.c.adrian@gmail.com?subject=Inquiry%20-%20Adrian%20L'>
             <EmailOutlinedIcon fontSize='large' />
           </SocialLink>

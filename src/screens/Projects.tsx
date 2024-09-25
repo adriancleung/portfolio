@@ -81,7 +81,7 @@ const Projects = () => {
     firebase.analytics.logEvent('projects_viewed');
   }, []);
 
-  const handleProjectLinkClicked = useCallback((repo_name: string) => {
+  const handleProjectLinkClick = useCallback((repo_name: string) => {
     firebase.analytics.logEvent(`project_link_clicked`, { repo_name });
   }, []);
 
@@ -112,7 +112,7 @@ const Projects = () => {
                 <a
                   target='_blank'
                   rel='noreferrer'
-                  onClick={() => handleProjectLinkClicked(repo.full_name)}
+                  onClick={() => handleProjectLinkClick(repo.full_name)}
                   href={repo.html_url}
                   style={{ textDecoration: 'none', color: 'black' }}>
                   <GitHubIcon />

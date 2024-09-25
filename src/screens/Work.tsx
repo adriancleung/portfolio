@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import FadeInWrapper from '../components/common/FadeIn';
 import { media } from '../styles/breakpoints';
 import { FullScreenLayout } from '../styles/layouts';
 import firebase from '../services/firebase';
+import Button from '../components/common/Button';
+import ResumeModal from './Resume';
 
 const WorkContainer = styled(FullScreenLayout)`
   display: flex;
@@ -37,6 +39,10 @@ const WorkAchievementList = styled.ul`
 const WorkAchievementItem = styled.li`
   text-align: justify;
   line-height: 1.7rem;
+`;
+
+const ResumeButtonContainer = styled.div`
+  margin: 0 auto;
 `;
 
 interface WorkInfoProps {
@@ -86,11 +92,22 @@ const WorkInfo = ({
 };
 
 const Work = () => {
+  const [showResumeModal, setShowResumeModal] = useState(false);
   const workExperiences: WorkInfoProps[] = firebase.config.get('work');
 
   useEffect(() => {
     firebase.analytics.logEvent('work_viewed');
   });
+
+  const handleResumeButtonClick = useCallback(() => {
+    setShowResumeModal(true);
+    firebase.analytics.logEvent('resume_link_clicked');
+  }, []);
+
+  const handleResumeModalClose = useCallback(() => {
+    setShowResumeModal(false);
+    firebase.analytics.logEvent('resume_modal_closed');
+  }, []);
 
   return (
     <FadeInWrapper>
@@ -102,7 +119,18 @@ const Work = () => {
             {...workExperience}
           />
         ))}
+        <ResumeButtonContainer>
+          <Button
+            onClick={handleResumeButtonClick}
+            styleOverride={{ textDecorationLine: 'underline' }}>
+            View resume
+          </Button>
+        </ResumeButtonContainer>
       </WorkContainer>
+      <ResumeModal
+        isVisible={showResumeModal}
+        onClose={handleResumeModalClose}
+      />
     </FadeInWrapper>
   );
 };
