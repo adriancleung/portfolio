@@ -31,7 +31,7 @@ interface AdobeDCView {
 
 class PDFViewerClient {
   config: object = {
-    clientId: 'e4e1feeff1db47a1a9a218a37a77d502',
+    clientId: '0a9ee814afca46bea00a4ffee3734224',
   };
 
   adobeDCView: AdobeDCView | undefined = undefined;
