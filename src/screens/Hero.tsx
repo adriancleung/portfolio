@@ -73,7 +73,7 @@ const TitleContainer = styled.div`
 
 const SocialLink = styled.a`
   text-decoration: none;
-  color: black;
+  color: #1d1d1f;
 `;
 
 interface AboutInfo {

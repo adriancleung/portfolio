@@ -4,7 +4,7 @@ import { Styles } from 'styled-components/dist/types';
 
 const ButtonContainer = styled.button<{ styleOverride?: Styles<object> }>`
   text-decoration: none;
-  color: black;
+  color: #1d1d1f;
   background-color: transparent;
   border: unset;
   cursor: pointer;

@@ -8,8 +8,6 @@ import { media } from '../styles/breakpoints';
 import firebase from '../services/firebase';
 
 const ProjectsContainer = styled(FullScreenLayout)`
-  max-width: 100vw;
-  padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,51 +19,38 @@ const ProjectsContainer = styled(FullScreenLayout)`
 `;
 
 const HeaderContainer = styled.div`
-  width: 1280px;
-  margin: 0 auto;
-  padding: 0 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 20px;
-
-  ${media.lg`
-    width: unset;
-  `}
 `;
 
-const ProjectCarouselContainer = styled.div`
-  overflow-x: scroll;
+const ProjectCardsContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   padding: 0 20px;
-  gap: 40px;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  gap: 20px;
 `;
 
-const ProjectCard = styled.div`
-  width: 380px;
-  height: 500px;
+const ProjectCard = styled.div<{ large?: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 20px;
-  flex-grow: 0;
+  height: 250px;
+  width: ${props => (props.large ? '300px' : '200px')};
+  flex-grow: 1;
   flex-shrink: 0;
-  margin: 10px 0;
-  padding: 0 10px;
-  border: 1px black solid;
-  border-radius: 24px;
-  box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.1);
+  gap: 10px;
+  padding: 20px;
+  border-radius: 30px;
+  background-color: #f5f5f7;
+  transition: all 0.2s ease-in-out;
 
-  ${media.md`
-    width: 300px;
-    height: 400px;
-  `}
+  &:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+    background-color: #f0f0f0;
+  }
 `;
 
 const Projects = () => {
@@ -81,9 +66,13 @@ const Projects = () => {
     firebase.analytics.logEvent('projects_viewed');
   }, []);
 
-  const handleProjectLinkClick = useCallback((repo_name: string) => {
-    firebase.analytics.logEvent(`project_link_clicked`, { repo_name });
-  }, []);
+  const handleProjectLinkClick = useCallback(
+    (repo_name: string, repo_url?: string) => {
+      firebase.analytics.logEvent(`project_link_clicked`, { repo_name });
+      repo_url && window.open(repo_url, '_blank');
+    },
+    []
+  );
 
   return (
     <FadeInWrapper>
@@ -96,9 +85,15 @@ const Projects = () => {
           </p>
         </HeaderContainer>
 
-        <ProjectCarouselContainer>
+        <ProjectCardsContainer>
           {repos?.map(repo => (
-            <ProjectCard key={repo.full_name}>
+            <ProjectCard
+              key={repo.full_name}
+              large={repo.description.split(' ').length > 7}
+              onClick={e => {
+                e.stopPropagation();
+                handleProjectLinkClick(repo.full_name, repo.html_url);
+              }}>
               <div>
                 <h3>{repo.name}</h3>
                 <p>{repo.description}</p>
@@ -112,9 +107,12 @@ const Projects = () => {
                 <a
                   target='_blank'
                   rel='noreferrer'
-                  onClick={() => handleProjectLinkClick(repo.full_name)}
+                  onClick={e => {
+                    e.stopPropagation();
+                    handleProjectLinkClick(repo.full_name);
+                  }}
                   href={repo.html_url}
-                  style={{ textDecoration: 'none', color: 'black' }}>
+                  style={{ textDecoration: 'none', color: '#1d1d1f' }}>
                   <GitHubIcon />
                 </a>
 
@@ -122,7 +120,7 @@ const Projects = () => {
               </div>
             </ProjectCard>
           ))}
-        </ProjectCarouselContainer>
+        </ProjectCardsContainer>
       </ProjectsContainer>
     </FadeInWrapper>
   );
