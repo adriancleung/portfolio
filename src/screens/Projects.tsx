@@ -43,13 +43,13 @@ const ProjectCard = styled.div<{ large?: boolean }>`
   gap: 10px;
   padding: 20px;
   border-radius: 30px;
-  background-color: #f5f5f7;
+  background-color: #F5F5F7;
   transition: all 0.2s ease-in-out;
 
   &:hover {
     transform: scale(1.05);
     cursor: pointer;
-    background-color: #f0f0f0;
+    background-color: #F0F0F0;
   }
 `;
 
@@ -112,7 +112,7 @@ const Projects = () => {
                     handleProjectLinkClick(repo.full_name);
                   }}
                   href={repo.html_url}
-                  style={{ textDecoration: 'none', color: '#1d1d1f' }}>
+                  style={{ textDecoration: 'none', color: '#1D1D1F' }}>
                   <GitHubIcon />
                 </a>
 

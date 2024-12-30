@@ -6,7 +6,7 @@ import Projects from './screens/Projects';
 import firebase from './services/firebase';
 
 const WrapperContainer = styled.div`
-  background-color: #fbfcf8;
+  background-color: #FBFCF8;
 `;
 
 const App = () => {

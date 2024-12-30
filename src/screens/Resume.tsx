@@ -7,7 +7,7 @@ import firebase from '../services/firebase';
 import PDFViewerClient from '../services/PDFViewerClient';
 
 const ResumeModalContainer = styled.div`
-  background-color: #fbfcf8;
+  background-color: #FBFCF8;
   width: 100vw;
   height: 100vh;
   position: fixed;
