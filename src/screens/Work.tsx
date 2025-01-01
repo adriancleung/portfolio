@@ -1,11 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import FadeInWrapper from '../components/common/FadeIn';
-import { media } from '../styles/breakpoints';
-import { FullScreenLayout } from '../styles/layouts';
-import firebase from '../services/firebase';
-import Button from '../components/common/Button';
-import ResumeModal from './Resume';
+import React, { useCallback, useEffect, useState } from "react";
+import styled from "styled-components";
+import FadeInWrapper from "../components/common/FadeIn";
+import { media } from "../styles/breakpoints";
+import { FullScreenLayout } from "../styles/layouts";
+import firebase from "../services/firebase";
+import Button from "../components/common/Button";
+import ResumeModal from "./Resume";
+
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 const WorkContainer = styled(FullScreenLayout)`
   display: flex;
@@ -60,16 +75,11 @@ const WorkInfo = ({
   startDate,
   endDate,
 }: WorkInfoProps) => {
-  const startMonth = Intl.DateTimeFormat('default', { month: 'long' }).format(
-    new Date(startDate.split('-')[1])
-  );
-  const startYear = startDate.split('-')[0];
-  const endMonth =
-    endDate &&
-    Intl.DateTimeFormat('default', { month: 'long' }).format(
-      new Date(endDate.split('-')[1])
-    );
-  const endYear = endDate && endDate.split('-')[0];
+  console.log(new Date(startDate.split("-")[1]));
+  const startMonth = MONTHS[Number(startDate.split("-")[1]) - 1];
+  const startYear = startDate.split("-")[0];
+  const endMonth = endDate && MONTHS[Number(endDate.split("-")[1]) - 1];
+  const endYear = endDate && endDate.split("-")[0];
   return (
     <WorkInfoContainer>
       <WorkTitleContainer>
@@ -77,7 +87,7 @@ const WorkInfo = ({
           {title} | {company}
         </h3>
         <span>{`${startMonth} ${startYear} – ${
-          endDate ? `${endMonth} ${endYear}` : 'Present'
+          endDate ? `${endMonth} ${endYear}` : "Present"
         }`}</span>
       </WorkTitleContainer>
       <WorkAchievementList>
@@ -93,27 +103,27 @@ const WorkInfo = ({
 
 const Work = () => {
   const [showResumeModal, setShowResumeModal] = useState(false);
-  const workExperiences: WorkInfoProps[] = firebase.config.get('work');
+  const workExperiences: WorkInfoProps[] = firebase.config.get("work");
 
   useEffect(() => {
-    firebase.analytics.logEvent('work_viewed');
+    firebase.analytics.logEvent("work_viewed");
   });
 
   const handleResumeButtonClick = useCallback(() => {
     setShowResumeModal(true);
-    firebase.analytics.logEvent('resume_link_clicked');
+    firebase.analytics.logEvent("resume_link_clicked");
   }, []);
 
   const handleResumeModalClose = useCallback(() => {
     setShowResumeModal(false);
-    firebase.analytics.logEvent('resume_modal_closed');
+    firebase.analytics.logEvent("resume_modal_closed");
   }, []);
 
   return (
     <FadeInWrapper>
       <WorkContainer>
         <h2>Work Experience</h2>
-        {workExperiences.map(workExperience => (
+        {workExperiences.map((workExperience) => (
           <WorkInfo
             key={`${workExperience.title}-${workExperience.company}`}
             {...workExperience}
@@ -122,7 +132,8 @@ const Work = () => {
         <ResumeButtonContainer>
           <Button
             onClick={handleResumeButtonClick}
-            styleOverride={{ textDecorationLine: 'underline' }}>
+            styleOverride={{ textDecorationLine: "underline" }}
+          >
             View resume
           </Button>
         </ResumeButtonContainer>
