@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import CloseIcon from '@mui/icons-material/Close';
-import Button from '../components/common/Button';
-import { createPortal } from 'react-dom';
-import firebase from '../services/firebase';
-import PDFViewerClient from '../services/PDFViewerClient';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import CloseIcon from "@mui/icons-material/Close";
+import Button from "../components/common/Button";
+import { createPortal } from "react-dom";
+import firebase from "../services/firebase";
+import PDFViewerClient from "../services/PDFViewerClient";
 
 const ResumeModalContainer = styled.div`
-  background-color: #FBFCF8;
+  background-color: #fbfcf8;
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -43,17 +43,17 @@ interface ResumeModalProps {
 const ResumeModal = ({ isVisible, onClose }: ResumeModalProps) => {
   useEffect(() => {
     if (isVisible) {
-      document.body.style.overflowY = 'hidden';
-      firebase.analytics.logEvent('resume_viewed');
+      document.body.style.overflowY = "hidden";
+      firebase.analytics.logEvent("resume_viewed");
     } else {
-      document.body.style.overflowY = 'scroll';
+      document.body.style.overflowY = "scroll";
     }
   }, [isVisible]);
 
   useEffect(() => {
-    const pdfViewerClient = new PDFViewerClient('resume-content-container');
-    pdfViewerClient.previewFile('https://api.adrianleung.dev/resume', {
-      embedMode: 'SIZED_CONTAINER',
+    const pdfViewerClient = new PDFViewerClient("resume-content-container");
+    pdfViewerClient.previewFile("https://api.adrianleung.dev/resume", {
+      embedMode: "SIZED_CONTAINER",
       showAnnotationTools: false,
       enableFormFilling: false,
       showDownloadPDF: true,
@@ -61,16 +61,16 @@ const ResumeModal = ({ isVisible, onClose }: ResumeModalProps) => {
       showZoomControl: true,
       showFullScreenViewButton: false,
       showFullScreen: false,
-      defaultViewMode: 'FIT_PAGE',
+      defaultViewMode: "FIT_PAGE",
     });
   }, []);
 
   return createPortal(
-    <ResumeModalContainer className={isVisible ? 'is-visible' : ''}>
+    <ResumeModalContainer className={isVisible ? "is-visible" : ""}>
       <ResumeTopBarContainer>
         <Button onClick={onClose}>{<CloseIcon />}</Button>
       </ResumeTopBarContainer>
-      <ResumeContentContainer id='resume-content-container'></ResumeContentContainer>
+      <ResumeContentContainer id="resume-content-container"></ResumeContentContainer>
     </ResumeModalContainer>,
     document.body
   );

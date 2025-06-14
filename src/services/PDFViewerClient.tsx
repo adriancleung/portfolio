@@ -1,5 +1,5 @@
 interface ViewConfig {
-  embedMode?: 'FULL_WINDOW' | 'IN_LINE' | 'LIGHT_BOX' | 'SIZED_CONTAINER';
+  embedMode?: "FULL_WINDOW" | "IN_LINE" | "LIGHT_BOX" | "SIZED_CONTAINER";
   showAnnotationTools?: boolean;
   enableFormFilling?: boolean;
   showDownloadPDF?: boolean;
@@ -8,10 +8,10 @@ interface ViewConfig {
   showFullScreenViewButton?: boolean;
   showFullScreen?: boolean;
   defaultViewMode?:
-    | 'FIT_PAGE'
-    | 'FIT_WIDTH'
-    | 'TWO_COLUMN'
-    | 'TWO_COLUMN_FIT_PAGE';
+    | "FIT_PAGE"
+    | "FIT_WIDTH"
+    | "TWO_COLUMN"
+    | "TWO_COLUMN_FIT_PAGE";
 }
 
 interface FileContent {
@@ -31,7 +31,7 @@ interface AdobeDCView {
 
 class PDFViewerClient {
   config: object = {
-    clientId: '0a9ee814afca46bea00a4ffee3734224',
+    clientId: "0a9ee814afca46bea00a4ffee3734224",
   };
 
   adobeDCView: AdobeDCView | undefined = undefined;
@@ -41,7 +41,7 @@ class PDFViewerClient {
     if ((window as any).AdobeDC) {
       this.adobeDCView = new (window as any).AdobeDC.View(this.config);
     } else {
-      document.addEventListener('adobe_dc_view_sdk.ready', () => {
+      document.addEventListener("adobe_dc_view_sdk.ready", () => {
         this.adobeDCView = new (window as any).AdobeDC.View(this.config);
       });
     }
@@ -57,7 +57,7 @@ class PDFViewerClient {
             },
           },
           metaData: {
-            fileName: 'Resume_AdrianLeung.pdf',
+            fileName: "Resume_AdrianLeung.pdf",
           },
         },
         viewConfig
