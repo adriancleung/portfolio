@@ -1,15 +1,16 @@
-import React, { MouseEventHandler, ReactNode } from 'react';
-import styled, { css } from 'styled-components';
-import { Styles } from 'styled-components/dist/types';
+import React, { MouseEventHandler, ReactNode } from "react";
+import styled, { css } from "styled-components";
+import { Styles } from "styled-components/dist/types";
 
 const ButtonContainer = styled.button<{ styleOverride?: Styles<object> }>`
   text-decoration: none;
-  color: #1D1D1F;
+  /* color: #1D1D1F; */
+  color: #fbfcf8;
   background-color: transparent;
   border: unset;
   cursor: pointer;
   font-size: 1rem;
-  ${props => props.styleOverride && css(props.styleOverride)}
+  ${(props) => props.styleOverride && css(props.styleOverride)}
 `;
 
 interface ButtonProps {

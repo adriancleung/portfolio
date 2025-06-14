@@ -1,4 +1,4 @@
-const GITHUB_API = 'https://api.github.com';
+const GITHUB_API = "https://api.github.com";
 
 export interface GetRepoResponse {
   name: string;
@@ -20,7 +20,7 @@ const github: GitHub = {
       return await (
         await fetch(`${GITHUB_API}/users/adriancleung/repos`, {
           headers: {
-            Accept: 'application/vnd.github.v3+json',
+            Accept: "application/vnd.github.v3+json",
           },
         })
       ).json();

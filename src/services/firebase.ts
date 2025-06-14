@@ -1,22 +1,22 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from "firebase/app";
 import {
   fetchAndActivate,
   getRemoteConfig,
   getValue,
-} from 'firebase/remote-config';
-import { getAnalytics, logEvent } from 'firebase/analytics';
+} from "firebase/remote-config";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
-import defaultConfigs from '../configs/defaults.json';
+import defaultConfigs from "../configs/defaults.json";
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAEyZHPWipbkFKo2oJSPj7Hzv4CgsmFiGE',
-  authDomain: 'adrianleung-dev.firebaseapp.com',
-  databaseURL: 'https://adrianleung-dev.firebaseio.com',
-  projectId: 'adrianleung-dev',
-  storageBucket: 'adrianleung-dev.appspot.com',
-  messagingSenderId: '885550843918',
-  appId: '1:885550843918:web:ed4218655626e03365d45f',
-  measurementId: 'G-L7ZEB0D8NP',
+  apiKey: "AIzaSyAEyZHPWipbkFKo2oJSPj7Hzv4CgsmFiGE",
+  authDomain: "adrianleung-dev.firebaseapp.com",
+  databaseURL: "https://adrianleung-dev.firebaseio.com",
+  projectId: "adrianleung-dev",
+  storageBucket: "adrianleung-dev.appspot.com",
+  messagingSenderId: "885550843918",
+  appId: "1:885550843918:web:ed4218655626e03365d45f",
+  measurementId: "G-L7ZEB0D8NP",
 };
 
 const app = initializeApp(firebaseConfig);

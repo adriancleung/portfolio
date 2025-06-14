@@ -121,7 +121,7 @@ const Work = () => {
 
   return (
     <FadeInWrapper>
-      <WorkContainer>
+      <WorkContainer id="work">
         <h2>Work Experience</h2>
         {workExperiences.map((workExperience) => (
           <WorkInfo
