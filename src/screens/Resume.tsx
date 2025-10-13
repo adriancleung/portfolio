@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "../components/common/Button";
@@ -7,7 +7,7 @@ import firebase from "../services/firebase";
 import PDFViewerClient from "../services/PDFViewerClient";
 
 const ResumeModalContainer = styled.div`
-  background-color: #fbfcf8;
+  background-color: #1d1d1f;
   width: 100vw;
   height: 100vh;
   position: fixed;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Hero from "./screens/Hero";
 import Work from "./screens/Work";
@@ -7,11 +7,11 @@ import firebase from "./services/firebase";
 import LiquidGlassNavBar from "./components/common/LiquidGlassNavBar";
 
 const WrapperContainer = styled.div`
-  /* background-color: #fbfcf8; */
   background-image: url(https://images.unsplash.com/photo-1647346425804-34383b95644b?q=80&w=3840&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  -webkit-background-size: cover;
 `;
 
 const App = () => {

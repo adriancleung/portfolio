@@ -1,100 +1,106 @@
-import React, { ReactNode } from "react";
 import styled from "styled-components";
-import { media } from "../../styles/breakpoints";
 
-const Glass = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+const NavContainer = styled.nav`
+  --bg-color: rgba(255, 255, 255, 0.25);
+  --highlight: rgba(255, 255, 255, 0.75);
+  --text: #ffffff;
+
   position: fixed;
-  bottom: 32px;
+  max-width: 600px;
   left: 50%;
+  bottom: 32px;
   transform: translateX(-50%);
-  width: 50%;
-  height: 6rem;
-  isolation: isolate;
-  touch-action: none;
-  border-radius: 28px;
-  box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  background: transparent;
 
-  ${media.lg`
-    width: 90%;
-    height: 4rem;
-    border-radius: 16px;
-  `}
-
-  &:before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: 28px;
-    box-shadow: inset 0px 0px 20px -5px rgba(255, 255, 255, 0.7);
-    background-color: rgba(255, 255, 255, 0.4);
-
-    ${media.lg`
-      border-radius: 16px;
-    `}
+  @media (prefers-color-scheme: dark) {
+    --bg-color: rgba(0, 0, 0, 0.25);
+    --highlight: rgba(255, 255, 255, 0.15);
   }
+`;
 
-  &:after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: 28px;
-    backdrop-filter: blur(2px);
-    filter: url(#glass-distortion);
-    isolation: isolate;
-    -webkit-backdrop-filter: blur(2px);
-    -webkit-filter: url("#glass-distortion");
+const BaseGlass = styled.div`
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+`;
 
-    ${media.lg`
-      border-radius: 16px;
-    `}
+const GlassFilter = styled(BaseGlass)`
+  z-index: 1;
+  backdrop-filter: blur(4px);
+  filter: url(#glass-distortion) saturate(120%) brightness(1.15);
+`;
+
+const GlassOverlay = styled(BaseGlass)`
+  z-index: 2;
+  background: var(--bg-color);
+`;
+
+const GlassSpecular = styled(BaseGlass)`
+  z-index: 3;
+  box-shadow: inset 1px 1px 1px var(--highlight);
+`;
+
+const GlassContent = styled.div`
+  position: relative;
+  z-index: 4;
+  padding: 16px;
+`;
+
+const NavList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+`;
+
+const NavItem = styled.a`
+  color: var(--text);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 `;
 
 interface LiquidGlassContainerProps {
-  children: ReactNode;
+  links: { href: string; title: string }[];
 }
 
-const LiquidGlassContainer = ({ children }: LiquidGlassContainerProps) => {
+const LiquidGlassContainer = ({ links }: LiquidGlassContainerProps) => {
   return (
     <>
-      <Glass>{children}</Glass>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="0"
-        height="0"
-        style={{ position: "absolute", overflow: "hidden" }}
-      >
-        <defs>
-          <filter
-            id="glass-distortion"
-            x="0%"
-            y="0%"
-            width="100%"
-            height="100%"
-          >
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.005 0.005"
-              numOctaves="1"
-              seed="92"
-              result="noise"
-            />
-            <feGaussianBlur in="noise" stdDeviation="2" result="blurred" />
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="blurred"
-              scale="75"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            />
-          </filter>
-        </defs>
+      <svg style={{ display: "none" }}>
+        <filter id="glass-distortion">
+          <feTurbulence
+            type="turbulence"
+            baseFrequency="0.008"
+            numOctaves="2"
+            result="noise"
+          />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="77" />
+        </filter>
       </svg>
+      <NavContainer>
+        <GlassFilter />
+        <GlassOverlay />
+        <GlassSpecular />
+        <GlassContent>
+          <NavList>
+            {links.map((link) => (
+              <li key={link.title}>
+                <NavItem href={link.href}>{link.title}</NavItem>
+              </li>
+            ))}
+          </NavList>
+        </GlassContent>
+      </NavContainer>
     </>
   );
 };

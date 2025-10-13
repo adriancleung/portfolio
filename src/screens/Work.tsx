@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import FadeInWrapper from "../components/common/FadeIn";
 import { media } from "../styles/breakpoints";
@@ -75,7 +75,6 @@ const WorkInfo = ({
   startDate,
   endDate,
 }: WorkInfoProps) => {
-  console.log(new Date(startDate.split("-")[1]));
   const startMonth = MONTHS[Number(startDate.split("-")[1]) - 1];
   const startYear = startDate.split("-")[0];
   const endMonth = endDate && MONTHS[Number(endDate.split("-")[1]) - 1];
